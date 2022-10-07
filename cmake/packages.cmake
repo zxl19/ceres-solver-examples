@@ -1,9 +1,11 @@
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package(Eigen3 REQUIRED QUIET)
 find_package(Ceres REQUIRED QUIET)
-find_package(gflags REQUIRED QUIET)
 
-option(GFLAGS "Enable Google Flags." ON)
-
-include_directories(${EIGEN3_INCLUDE_DIRS} ${CERES_INCLUDE_DIRS})
+if(gflags_FOUND)
+  message("-- Found Google Flags (gflags) version ${gflags_VERSION}: ${gflags_DIR}")
+  option(GFLAGS "Enable Google Flags." ON)
+else()
+  message("-- Did not find Google Flags (gflags), Building without gflags.")
+  option(GFLAGS "Enable Google Flags." OFF)
+endif()
